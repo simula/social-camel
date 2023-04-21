@@ -14,6 +14,18 @@ The original implementation: https://github.com/lightaime/camel. <br />
 Project website: https://www.camel-ai.org/. <br />
 Arxiv paper: https://arxiv.org/abs/2303.17760. <br />
 
+## Example
+Example output where a teacher is trying to explain why 2 + 2 = 4 to a student.
+```
+Teacher: Great, let's get started! So, as a math teacher, I can explain why 2 + 2 equals 4. Would you like me to start with a basic explanation or a more advanced one?
 
+Student: As a very dumb student, I would appreciate it if you could start with a basic explanation.
 
+Teacher: Of course, I'm happy to help! So, when we say "2 + 2", we're essentially asking how many things we have when we combine two groups of two things each.
 
+So, if we have two apples and we add two more apples, we end up with four apples in total. The same goes for any other objects or numbers.
+
+Does that make sense so far?
+
+Student: Yes, I understand the concept of combining two groups of two things to get four things in total. But why does it work that way? Why does 2 + 2 always equal 4?
+```
