@@ -1,3 +1,4 @@
+import argparse
 from typing import List
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
@@ -35,10 +36,7 @@ class Agent:
 
 
 class Simulation:
-    def __init__(
-        self,
-        agents: List[Agent]
-    ) -> None:
+    def __init__(self, agents: List[Agent]) -> None:
         self.agents = agents
 
     def run_simulation(self, chat_turn_limit: int = 30) -> None:
@@ -82,11 +80,33 @@ def create_agents(task: str, temperature: float = 0.2) -> List[Agent]:
 
 
 def main() -> None:
-    task = "Make the student understand why 2 + 2 equals 4"
-    agents = create_agents(task)
+    parser = argparse.ArgumentParser(
+        description="Run a simulation with the given task."
+    )
+    parser.add_argument(
+        "--task",
+        type=str,
+        default="Make the student understand why 2 + 2 equals 4",
+        help="The task for the simulation.",
+    )
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=0.2,
+        help="The temperature used for the ChatOpenAI model.",
+    )
+    parser.add_argument(
+        "--chat_turn_limit",
+        type=int,
+        default=30,
+        help="The maximum number of chat turns.",
+    )
 
+    args = parser.parse_args()
+
+    agents = create_agents(task=args.task, temperature=args.temperature)
     simulation = Simulation(agents)
-    simulation.run_simulation()
+    simulation.run_simulation(chat_turn_limit=args.chat_turn_limit)
 
 
 if __name__ == "__main__":
