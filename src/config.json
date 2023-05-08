@@ -1,10 +1,10 @@
 {
     "turnLimit": 30,
-    "god": {
+    "observer": {
         "system_message": "You are monitoring a conversation between a Teacher, Child, and Student. Choose who should speak next.",
         "temperature": 0.2,
         "modelName": "gpt-4-0314",
-        "name": "God"
+        "name": "Observer"
     },
     "agents": [
         {

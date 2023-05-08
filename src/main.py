@@ -56,9 +56,9 @@ class Agent:
 
 
 class Simulation:
-    def __init__(self, agents: List[Agent], god: Agent = None) -> None:
+    def __init__(self, agents: List[Agent], observer: Agent = None) -> None:
         self.agents = agents
-        self.god = god
+        self.observer = observer
 
     def run_simulation(self, chat_turn_limit: int = 30) -> None:
         self.reset_agents()
@@ -66,12 +66,12 @@ class Simulation:
         n = 0
         while n < chat_turn_limit:
             n += 1
-            gods_word = HumanMessage(
-                content=self.god.step(self.god.memory.get_memory()).content
+            observer_msg = HumanMessage(
+                content=self.observer.step(self.observer.memory.get_memory()).content
             )
-            print("[GOD]: Now speak %s" % gods_word.content)
+            print("[Observer]: Next is %s" % observer_msg.content)
 
-            next_speaker = gods_word.content
+            next_speaker = observer_msg.content
 
             for agent in self.agents:
                 if agent.name == next_speaker:
@@ -104,14 +104,14 @@ def main() -> None:
     agents = []
     shared_memory = Memory()
 
-    god = Agent(
-        SystemMessage(content=config["god"]["system_message"]),
+    observer = Agent(
+        SystemMessage(content=config["observer"]["system_message"]),
         ChatOpenAI(
-            temperature=config["god"]["temperature"],
-            model_name=config["god"]["modelName"],
+            temperature=config["observer"]["temperature"],
+            model_name=config["observer"]["modelName"],
         ),
         memory=shared_memory,
-        name=config["god"]["name"],
+        name=config["observer"]["name"],
     )
 
     for agent_config in config["agents"]:
@@ -126,7 +126,7 @@ def main() -> None:
         )
         agents.append(agent)
 
-    simulation = Simulation(agents=agents, god=god)
+    simulation = Simulation(agents=agents, observer=observer)
     simulation.run_simulation(chat_turn_limit=config["turnLimit"])
 
 
